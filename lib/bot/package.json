@@ -1,11 +1,10 @@
 {
-  "name": "cli",
-  "scripts": {
-    "about": "ts-node src/about.ts",
-    "start-bot": "ts-node src/start-bot.ts"
-  },
+  "name": "bot",
+  "main": "src/index.ts",
   "dependencies": {
-    "bot": "workspace:*",
+    "@grammyjs/auto-retry": "^2.0.2",
+    "@grammyjs/transformer-throttler": "^1.2.1",
+    "grammy": "^1.35.0",
     "mongodb": "^6.14.0",
     "zod": "^3.24.2"
   },
