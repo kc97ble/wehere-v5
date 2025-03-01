@@ -3,17 +3,6 @@ import { postProcessEnv } from "common";
 import { MongoClient } from "mongodb";
 import { z } from "zod";
 
-export function percentDecode(value: string): string;
-export function percentDecode(value: string | undefined): string | undefined {
-  if (value == null) {
-    return undefined;
-  }
-  if (!/^[A-Za-z0-9\-_.!~*'()%:]*$/.test(value)) {
-    console.warn("all environment variables should be percent-encoded:", value);
-  }
-  return decodeURIComponent(value);
-}
-
 const ENV = postProcessEnv({
   TELEGRAM_BOT_TOKEN: z //
     .string({ message: "TELEGRAM_BOT_TOKEN" })

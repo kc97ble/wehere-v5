@@ -1,0 +1,9 @@
+{
+  "restartable": "rs",
+  "ignore": [".git"],
+  "verbose": true,
+  "execMap": {
+    "ts": "tsx"
+  },
+  "ext": "ts,tsx"
+}

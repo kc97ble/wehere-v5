@@ -5,4 +5,9 @@ while [ ! -f "yarn.lock" ]; do
     pwd
 done
 
-dotenvx run -f .env/dev.env -- yarn workspace cli run start-bot
+commands=(
+    "dotenvx run -f .env/dev.env -- yarn workspace cli run start-bot"
+    "yarn workspace web run dev"
+)
+
+concurrently "${commands[@]}"

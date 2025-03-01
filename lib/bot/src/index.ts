@@ -1,19 +1,14 @@
 import { autoRetry } from "@grammyjs/auto-retry";
 import { apiThrottler } from "@grammyjs/transformer-throttler";
-import { Bot, Context } from "grammy";
-import type { Db } from "mongodb";
-
-export type BotInjectedContext = {
-  db: Db;
-};
-
-export type BotContext = Context & BotInjectedContext;
+import { Bot } from "grammy";
+import Start from "./commands/start.ts";
+import { BotFullContext, BotInjectedContext } from "./types.ts";
 
 export async function createBot(
   telegramBotToken: string,
   injectedContext: BotInjectedContext
-): Promise<Bot<BotContext>> {
-  const bot = new Bot<BotContext>(telegramBotToken);
+): Promise<Bot<BotFullContext>> {
+  const bot = new Bot<BotFullContext>(telegramBotToken);
 
   bot.use(async (ctx, next) => {
     Object.assign(ctx, injectedContext);
@@ -22,6 +17,8 @@ export async function createBot(
 
   bot.api.config.use(apiThrottler());
   bot.api.config.use(autoRetry());
+
+  bot.command("start", Start["/"]);
 
   bot.on("message", (ctx) => ctx.reply("Got another message!"));
 

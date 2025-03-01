@@ -1,9 +1,10 @@
 {
   "name": "cli",
+  "type": "module",
   "scripts": {
-    "about": "ts-node src/about.ts",
-    "start-bot": "ts-node src/start-bot.ts",
-    "manage-webhook": "ts-node src/manage-webhook.ts"
+    "about": "tsx src/about.ts",
+    "manage-webhook": "tsx src/manage-webhook.ts",
+    "start-bot": "nodemon src/start-bot.ts"
   },
   "dependencies": {
     "@inquirer/prompts": "^7.3.2",
@@ -14,6 +15,8 @@
   },
   "devDependencies": {
     "@types/node": "^22.13.8",
+    "nodemon": "^3.1.9",
+    "tsx": "^4.19.3",
     "typescript": "^5.8.2"
   },
   "packageManager": "yarn@4.6.0"
