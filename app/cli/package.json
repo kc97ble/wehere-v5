@@ -1,0 +1,11 @@
+{
+  "name": "cli",
+  "packageManager": "yarn@4.6.0",
+  "scripts": {
+    "about": "ts-node ./about.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.8",
+    "typescript": "^5.8.2"
+  }
+}
