@@ -952,7 +952,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bot@workspace:*, bot@workspace:lib/bot":
+"bot@workspace:*, bot@workspace:^, bot@workspace:lib/bot":
   version: 0.0.0-use.local
   resolution: "bot@workspace:lib/bot"
   dependencies:
@@ -1079,6 +1079,7 @@ __metadata:
   dependencies:
     "@types/node": "npm:^22.13.8"
     bot: "workspace:*"
+    common: "workspace:*"
     mongodb: "npm:^6.14.0"
     typescript: "npm:^5.8.2"
     zod: "npm:^3.24.2"
@@ -1127,6 +1128,16 @@ __metadata:
   checksum: 10c0/7fbe7cfb811054c808349de19fb380252e5e34e61d7d168ec3353e9e9aacb1802674bddc657682e4e9730c2786592a4de6f8283e7e0d3870b829bb0b7b2f6118
   languageName: node
   linkType: hard
+
+"common@workspace:*, common@workspace:^, common@workspace:lib/common":
+  version: 0.0.0-use.local
+  resolution: "common@workspace:lib/common"
+  dependencies:
+    "@types/node": "npm:^22.13.8"
+    typescript: "npm:^5.8.2"
+    zod: "npm:^3.24.2"
+  languageName: unknown
+  linkType: soft
 
 "concat-map@npm:0.0.1":
   version: 0.0.1
@@ -3143,6 +3154,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"serialize-error@npm:^12.0.0":
+  version: 12.0.0
+  resolution: "serialize-error@npm:12.0.0"
+  dependencies:
+    type-fest: "npm:^4.31.0"
+  checksum: 10c0/d8422db262dd28422834e0acdaaa2425ba6735f791417cfbcbceb201ddea0e41ccd2865778afeb9b33c28273f01e89a4503fa670f82c0a387de61e2b0f8d74e4
+  languageName: node
+  linkType: hard
+
 "set-function-length@npm:^1.2.2":
   version: 1.2.2
   resolution: "set-function-length@npm:1.2.2"
@@ -3620,6 +3640,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"type-fest@npm:^4.31.0":
+  version: 4.36.0
+  resolution: "type-fest@npm:4.36.0"
+  checksum: 10c0/9257e309a61cfeaec754f45cee4892fe386233daabb3c3e4f990c9ca1a74d44e87166e5cdc12148ba87a350a54a7339b9168dcb478db591be297bf9882cf6634
+  languageName: node
+  linkType: hard
+
 "typed-array-buffer@npm:^1.0.3":
   version: 1.0.3
   resolution: "typed-array-buffer@npm:1.0.3"
@@ -3743,12 +3770,17 @@ __metadata:
     "@types/node": "npm:^20"
     "@types/react": "npm:^19"
     "@types/react-dom": "npm:^19"
+    bot: "workspace:^"
+    common: "workspace:^"
     eslint: "npm:^9"
     eslint-config-next: "npm:15.2.0"
+    mongodb: "npm:^6.14.0"
     next: "npm:15.2.0"
     react: "npm:^19.0.0"
     react-dom: "npm:^19.0.0"
+    serialize-error: "npm:^12.0.0"
     typescript: "npm:^5"
+    zod: "npm:^3.24.2"
   languageName: unknown
   linkType: soft
 
