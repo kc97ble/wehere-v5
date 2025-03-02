@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "allowImportingTsExtensions": true,
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
     "composite": true,
@@ -7,6 +8,7 @@
     "lib": ["ES2022"],
     "module": "NodeNext",
     "moduleResolution": "nodenext",
+    "noEmit": true,
     "noEmitOnError": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
