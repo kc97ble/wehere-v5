@@ -6,3 +6,9 @@ export type BotInjectedContext = {
 };
 
 export type BotFullContext = Context & BotInjectedContext;
+
+export type Command = {
+  name?: string;
+  main?: (ctx: BotFullContext) => Promise<void>;
+  routes?: Record<string, (ctx: BotFullContext) => Promise<void>>;
+};

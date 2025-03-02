@@ -4,7 +4,7 @@
   "scripts": {
     "about": "tsx src/about.ts",
     "manage-webhook": "tsx src/manage-webhook.ts",
-    "start-bot": "nodemon src/start-bot.ts"
+    "start-bot": "nodemon --delay 5s src/start-bot.ts"
   },
   "dependencies": {
     "@inquirer/prompts": "^7.3.2",
