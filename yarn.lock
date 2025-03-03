@@ -1012,7 +1012,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:^5.4.2 || ^6.0.0 || ^7.0.0 || ^8.0.0":
+"@typescript-eslint/eslint-plugin@npm:^5.4.2 || ^6.0.0 || ^7.0.0 || ^8.0.0, @typescript-eslint/eslint-plugin@npm:^8.25.0":
   version: 8.25.0
   resolution: "@typescript-eslint/eslint-plugin@npm:8.25.0"
   dependencies:
@@ -1033,7 +1033,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:^5.4.2 || ^6.0.0 || ^7.0.0 || ^8.0.0":
+"@typescript-eslint/parser@npm:^5.4.2 || ^6.0.0 || ^7.0.0 || ^8.0.0, @typescript-eslint/parser@npm:^8.25.0":
   version: 8.25.0
   resolution: "@typescript-eslint/parser@npm:8.25.0"
   dependencies:
@@ -1586,8 +1586,11 @@ __metadata:
   dependencies:
     "@inquirer/prompts": "npm:^7.3.2"
     "@types/node": "npm:^22.13.8"
+    "@typescript-eslint/eslint-plugin": "npm:^8.25.0"
+    "@typescript-eslint/parser": "npm:^8.25.0"
     bot: "workspace:*"
     common: "workspace:*"
+    eslint: "npm:^9.21.0"
     mongodb: "npm:^6.14.0"
     nodemon: "npm:^3.1.9"
     tsx: "npm:^4.19.3"
@@ -2276,7 +2279,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^9":
+"eslint@npm:^9, eslint@npm:^9.21.0":
   version: 9.21.0
   resolution: "eslint@npm:9.21.0"
   dependencies:
