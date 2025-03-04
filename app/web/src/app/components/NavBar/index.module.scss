@@ -1,0 +1,75 @@
+.Small {
+  backdrop-filter: blur(5px);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), transparent);
+  position: fixed;
+  height: 64px;
+  inset: 0 0 auto 0;
+}
+
+.Large {
+  backdrop-filter: blur(5px);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), transparent);
+  position: fixed;
+  height: 72px;
+  inset: 0 0 auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.folderSwitcher {
+  display: flex;
+  width: auto;
+  height: 46px;
+  list-style-type: none;
+  padding: 0 8px;
+  background-color: white;
+  margin: 0;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.FolderButton {
+  display: flex;
+
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    text-decoration: none;
+    background-color: white;
+    transition: background-color 0.2s ease;
+    color: #8987a1;
+    font-family: var(--font-sans), sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 16px;
+
+    &:hover {
+      opacity: 50%;
+    }
+  }
+
+  &.active {
+    a {
+      color: black;
+      font-weight: 700;
+    }
+  }
+}
+
+.Root {
+  display: static;
+  height: 72px;
+  transition-duration: 200ms;
+  transition-property: height;
+  width: 100%;
+}
+
+@media (max-width: 576px) {
+  .Root {
+    height: 64px;
+  }
+}
