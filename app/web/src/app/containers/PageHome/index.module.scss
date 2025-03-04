@@ -4,6 +4,15 @@
   align-items: center;
   min-height: 100vh;
 
+  background-image: radial-gradient(
+      circle at 89.28% 34.75%,
+      #1b93c940,
+      transparent 49%
+    ),
+    radial-gradient(circle at 89.76% 54.24%, #f7c33d40, transparent 48%),
+    radial-gradient(circle at 89.1% 18.7%, #9403fd40, transparent 42%),
+    radial-gradient(circle at 50% 50%, #f5f8ff, #f5f8ff 100%);
+
   h1 {
     color: #0070f3;
     font-size: 2rem;

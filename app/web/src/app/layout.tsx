@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Source_Code_Pro, Source_Serif_4, Work_Sans } from "next/font/google";
+import { Source_Code_Pro, Source_Serif_4, Inter } from "next/font/google";
 import "./globals.css";
 
-const sans = Work_Sans({
+const sans = Inter({
   variable: "--font-sans",
   subsets: ["latin", "vietnamese"],
 });
