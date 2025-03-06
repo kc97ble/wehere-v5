@@ -3,6 +3,7 @@ body {
   background-color: #f5f8ff;
   max-width: 100vw;
   overflow-x: hidden;
+  min-height: 100svh;
 }
 
 body {
