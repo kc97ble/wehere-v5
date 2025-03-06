@@ -1,4 +1,5 @@
 import NavBar from "../../components/NavBar";
+import SectionFooter from "./components/SectionFooter";
 import SectionHeroLarge from "./components/SectionHeroLarge";
 import styles from "./index.module.scss";
 
@@ -7,11 +8,7 @@ export const PageHome = () => {
     <div className={styles.container}>
       <NavBar zIndex={100} />
       <SectionHeroLarge />
-      {/* <ul>
-        {Array.from(Array(100), (_, index) => (
-          <li key={index}>{index}</li>
-        ))}
-      </ul> */}
+      <SectionFooter />
     </div>
   );
 };
