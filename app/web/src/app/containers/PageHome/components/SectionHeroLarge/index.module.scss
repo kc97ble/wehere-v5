@@ -1,0 +1,139 @@
+// TODO: if device width is small, use the vertical layout
+.Root {
+  height: 500px;
+  position: relative;
+  transition-property: height;
+  transition-duration: 200ms;
+
+  // This is for debugging purpose.
+  &:hover,
+  div:hover {
+    box-shadow: inset 0 0 0 1em hsla(2rad, 50%, 50%, 20%);
+  }
+
+  @media (max-width: 992px) {
+    height: 450px;
+  }
+}
+
+.col0 {
+  position: absolute;
+  inset: 0 auto 0 64px;
+  width: 540px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+
+  @media (max-width: 992px) {
+    width: 360px;
+    inset: 0 auto 0 40px;
+  }
+}
+
+.col1 {
+  position: absolute;
+  inset: 0 64px 0 600px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  @media (max-width: 992px) {
+    inset: 0 40px 0 360px;
+  }
+}
+
+.shadow0 {
+  position: absolute;
+  inset: -40%;
+  background: radial-gradient(
+    circle,
+    rgba(148, 3, 253, 25%) 0%,
+    rgba(148, 3, 253, 0%) 70%
+  );
+  translate: 0 -16%;
+}
+
+.shadow1 {
+  position: absolute;
+  inset: -40%;
+  background: radial-gradient(
+    circle,
+    rgba(27, 147, 201, 25%) 0%,
+    rgba(27, 147, 201, 0%) 70%
+  );
+  translate: 0 16%;
+}
+
+.figureContainer {
+  position: relative;
+  display: flex;
+  padding: 10%;
+}
+
+.figure {
+  position: relative;
+  width: 320px;
+  height: auto;
+
+  @media (max-width: 992px) {
+    width: 200px;
+  }
+}
+
+.title {
+  color: #252432;
+  font-family: var(--font-sans);
+  font-size: 48px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 120%;
+
+  @media (max-width: 992px) {
+    font-size: 36px;
+  }
+}
+
+.description {
+  margin-top: 32px;
+  color: #8987a1;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%; /* 18.043px */
+
+  @media (max-width: 992px) {
+    font-size: 14px;
+    margin-top: 24px;
+  }
+}
+
+.ctaButton {
+  margin-top: 48px;
+  height: 48px;
+  background-color: #1e1f81;
+  color: white;
+  box-shadow: 0px 0px 64px 0px #5b54ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 24px;
+  border-radius: 8px;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  text-decoration: none;
+  transition: box-shadow 200ms ease;
+  font-size: 16px;
+
+  &:hover {
+    box-shadow: 0px 0px 32px 0px #5b54ff;
+  }
+
+  @media (max-width: 992px) {
+    margin-top: 36px;
+    height: 44px;
+    font-size: 14px;
+    padding: 0 20px;
+  }
+}

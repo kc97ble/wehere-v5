@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
 import clsx from "clsx";
+import React from "react";
 import { useIsDeviceWidthLessThan } from "./hooks/useIsDeviceWidthLessThan";
 import styles from "./index.module.scss";
 
@@ -14,7 +14,10 @@ type FolderButtonProps = {
 
 function FolderButton({ active, href, children, style }: FolderButtonProps) {
   return (
-    <li className={clsx(styles.FolderButton, active && styles.active)} style={style}>
+    <li
+      className={clsx(styles.FolderButton, active && styles.active)}
+      style={style}
+    >
       <a href={href}>{children}</a>
     </li>
   );
@@ -25,7 +28,11 @@ type ComponentProps = {
 };
 
 function Small({ style }: ComponentProps) {
-  return <div className={styles.Small} style={style}>{/* Small NavBar content */}</div>;
+  return (
+    <div className={styles.Small} style={style}>
+      {/* Small NavBar content */}
+    </div>
+  );
 }
 
 function Large({ style }: ComponentProps) {
@@ -53,6 +60,7 @@ type RootProps = {
   style?: React.CSSProperties;
 };
 
+// TODO: set z-index
 function Root({ style }: RootProps) {
   const isSmallWidth = useIsDeviceWidthLessThan(576);
 
