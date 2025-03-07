@@ -1,6 +1,7 @@
 import { postProcessEnv } from "common";
-import { Db, MongoClient } from "mongodb";
 import { z } from "zod";
+
+console.log(process.env.TELEGRAM_BOT_TOKEN);
 
 export const ENV = postProcessEnv({
   TELEGRAM_BOT_TOKEN: z //
@@ -16,18 +17,3 @@ export const ENV = postProcessEnv({
     .string({ message: "MONGODB_DBNAME" })
     .parse(process.env.MONGODB_DBNAME),
 });
-
-export async function withDb<R>(cb: (db: Db) => R): Promise<Awaited<R>> {
-  console.log("Connecting to DB:", ENV.MONGODB_DBNAME);
-  const client = await MongoClient.connect(ENV.MONGODB_URI);
-  const db = client.db(ENV.MONGODB_DBNAME);
-  console.log("Connected to DB.");
-
-  try {
-    return await cb(db);
-  } finally {
-    console.log("Closing DB connection:", ENV.MONGODB_DBNAME);
-    await client.close();
-    console.log("Closed.");
-  }
-}

@@ -1,14 +1,15 @@
 import { createBot, webhookCallback } from "bot";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { serializeError } from "serialize-error";
-import { ENV, withDb } from "../../lib/server";
+import { ENV } from "../../utils/server/env";
+import { withDbClassic } from "../../utils/server/with";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   try {
-    await withDb(async (db) => {
+    await withDbClassic(async (db) => {
       const bot = await createBot(ENV.TELEGRAM_BOT_TOKEN, { db });
       await webhookCallback(bot, "next-js", {
         // https://core.telegram.org/bots/api#setwebhook

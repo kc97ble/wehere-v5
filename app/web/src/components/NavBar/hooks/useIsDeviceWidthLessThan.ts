@@ -7,7 +7,6 @@ export function useIsDeviceWidthLessThan(width: number): boolean | undefined {
     const listener = () => {
       const newResult = window.innerWidth < width;
       if (result !== newResult) {
-        console.log("setResult", newResult);
         setResult(newResult);
       }
     };
@@ -23,7 +22,6 @@ export function useIsDeviceWidthLessThan(width: number): boolean | undefined {
 
   React.useEffect(() => {
     return () => {
-      console.log("setResult", undefined);
       setResult(undefined);
     };
   }, []);

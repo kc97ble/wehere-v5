@@ -5,6 +5,7 @@
   "dependencies": {
     "@grammyjs/auto-retry": "^2.0.2",
     "@grammyjs/transformer-throttler": "^1.2.1",
+    "database": "workspace:^",
     "grammy": "^1.35.0",
     "html-escaper": "^3.0.3",
     "messageformat": "^4.0.0-9",

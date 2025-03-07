@@ -1,8 +1,8 @@
 import { makeCollection } from "database";
-import { DbRole } from "../typing/database.ts";
+import { DbPost } from "../../typing/database";
 
 const collections = {
-  role: makeCollection("role", DbRole),
+  post: makeCollection("post", DbPost),
 };
 
 export default collections;
