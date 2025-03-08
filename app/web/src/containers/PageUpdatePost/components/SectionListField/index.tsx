@@ -1,7 +1,7 @@
 "use client";
 
 import { useField } from "uniforms";
-import { Section } from "../../../../typing/common";
+import { Section } from "web/typing/common";
 
 interface SectionListFieldProps {
   name: string;
@@ -9,7 +9,7 @@ interface SectionListFieldProps {
 }
 
 export default function SectionListField(props: SectionListFieldProps) {
-  const [fieldProps, context] = useField(props.name, props);
+  const [fieldProps, _context] = useField(props.name, props);
   const { onChange, value } = fieldProps;
 
   if (value == null) {

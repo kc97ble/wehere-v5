@@ -6,7 +6,7 @@ import React from "react";
 import { AutoField, AutoForm, ErrorsField, SubmitField } from "uniforms-antd";
 import ZodBridge from "uniforms-bridge-zod";
 import { z } from "zod";
-import { Section } from "../../typing/common";
+import { Section } from "web/typing/common";
 import SectionListField from "./components/SectionListField";
 import useIsMounted from "./hooks/useIsMounted";
 

@@ -1,7 +1,7 @@
+import { doGetPost } from "web/app/api/post/logic";
+import PageUpdatePost from "web/containers/PageUpdatePost";
+import { withDbClassic } from "web/utils/server/with";
 import { z } from "zod";
-import PageUpdatePost from "../../../containers/PageUpdatePost";
-import { withDbClassic } from "../../../utils/server/with";
-import { doGetPost } from "../../api/post/GetPost/route";
 
 const Params = z.object({
   postId: z.string(),
