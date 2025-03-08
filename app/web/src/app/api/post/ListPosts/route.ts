@@ -13,7 +13,7 @@ async function doListPosts(
   ctx: { db: Db },
   params: PrListPosts
 ): Promise<RsListPosts> {
-  const { offset, limit } = params;
+  const { offset, limit, order } = params;
 
   // Get the posts with pagination
   const posts = await collections.post.findMany(
@@ -22,7 +22,7 @@ async function doListPosts(
     {
       skip: offset,
       limit,
-      sort: { _id: -1 }, // Sort by _id descending (newest first)
+      sort: { _id: order === "ASC" ? 1 : -1 },
     }
   );
 
@@ -33,12 +33,6 @@ async function doListPosts(
     posts: posts.map((post) => ({
       id: post._id.toHexString(),
       title: post.title,
-      sections: post.sections
-        ? post.sections.map((section) => ({
-            updatedAt: section.updatedAt || null,
-            content: section.union,
-          }))
-        : null,
       createdAt: post._id.getTimestamp().valueOf(),
     })),
     total,

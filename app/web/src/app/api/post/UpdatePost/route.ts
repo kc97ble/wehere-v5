@@ -8,35 +8,30 @@ import {
   withDb,
   withErrorHandling,
 } from "../../../../utils/server/with";
-import { PrGetPost, RsGetPost } from "../typing";
+import { PrUpdatePost, RsUpdatePost } from "../typing";
 
-export async function doGetPost(
+export async function doUpdatePost(
   ctx: { db: Db },
-  params: PrGetPost
-): Promise<RsGetPost> {
-  const post = await collections.post.findOne(ctx, {
-    _id: ObjectId.createFromHexString(params.postId),
-  });
+  { postId, title, sections }: PrUpdatePost
+): Promise<RsUpdatePost> {
+  const result = await collections.post.updateOne(
+    ctx,
+    { _id: ObjectId.createFromHexString(postId) },
+    { $set: { title, sections } }
+  );
 
-  if (!post) {
+  if (result.matchedCount === 0) {
     throw NextResponse.json({ error: "post not found" }, { status: 404 });
   }
 
-  return {
-    post: {
-      id: post._id.toHexString(),
-      title: post.title,
-      sections: post.sections,
-      createdAt: post._id.getTimestamp().valueOf(),
-    },
-  };
+  return { success: true };
 }
 
 export const POST = compose(
   withErrorHandling,
   withCors,
   withDb(),
-  withBodyParser(PrGetPost)
+  withBodyParser(PrUpdatePost)
 )(async (params, [_request, [db, _]]) => {
-  return await doGetPost({ db }, params);
+  return await doUpdatePost({ db }, params);
 });
