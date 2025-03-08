@@ -1,4 +1,5 @@
-import { Db } from "mongodb";
+import { Db, WithoutId } from "mongodb";
+import { DbPost } from "../../../../typing/database";
 import { compose } from "../../../../utils/common/compose";
 import collections from "../../../../utils/server/collections";
 import {
@@ -13,10 +14,12 @@ async function doCreatePost(
   ctx: { db: Db },
   params: PrCreatePost
 ): Promise<RsCreatePost> {
-  const ack = await collections.post.insertOne(ctx, {
+  // Create a post with sections if content is provided
+  const postData: WithoutId<DbPost> = {
     title: params.title,
-    content: params.content,
-  });
+  };
+
+  const ack = await collections.post.insertOne(ctx, postData);
   return { postId: ack.insertedId.toHexString() };
 }
 

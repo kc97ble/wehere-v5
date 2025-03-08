@@ -1,15 +1,16 @@
 "use client";
 
+import { faker } from "@faker-js/faker";
 import { Button, Divider, Input, Layout, Menu, Typography } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AutoForm } from "uniforms-antd";
 import { ZodBridge } from "uniforms-bridge-zod";
 import { ZodType } from "zod";
-import { 
-  PrCreatePost, 
-  PrDeletePost, 
-  PrGetPost, 
-  PrListPosts 
+import {
+  PrCreatePost,
+  PrDeletePost,
+  PrGetPost,
+  PrListPosts,
 } from "../api/post/typing";
 
 const { Content, Sider } = Layout;
@@ -58,7 +59,10 @@ const endpoints: EndpointType<unknown>[] = [
 
 // Separate Postman component
 function Postman({ endpoint }: { endpoint: EndpointType<unknown> }) {
-  const [response, setResponse] = useState<{ status: number | string; data: unknown } | null>(null);
+  const [response, setResponse] = useState<{
+    status: number | string;
+    data: unknown;
+  } | null>(null);
   const [loading, setLoading] = useState(false);
 
   // Create schema bridge for the endpoint
@@ -139,6 +143,22 @@ function Postman({ endpoint }: { endpoint: EndpointType<unknown> }) {
 export default function PostmanPage() {
   const [selectedKey, setSelectedKey] = useState<string | undefined>(undefined);
 
+  // Assign faker to window object
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      // Define a proper window interface extension
+      interface CustomWindow extends Window {
+        faker?: typeof faker;
+      }
+
+      // Apply the type to the window object
+      (window as CustomWindow).faker = faker;
+      console.log(
+        "Faker assigned to window object. Access via window.faker or just faker in console."
+      );
+    }
+  }, []);
+
   // Find the selected endpoint
   const selectedEndpoint = endpoints.find((e) => e.key === selectedKey);
 
@@ -167,7 +187,7 @@ export default function PostmanPage() {
       <Layout>
         <Content style={{ padding: "24px" }}>
           {selectedEndpoint ? (
-            <Postman endpoint={selectedEndpoint} />
+            <Postman key={selectedEndpoint.key} endpoint={selectedEndpoint} />
           ) : (
             <div style={{ textAlign: "center", padding: "100px 0" }}>
               <Title level={4}>

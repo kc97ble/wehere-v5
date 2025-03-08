@@ -379,6 +379,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@faker-js/faker@npm:^9.6.0":
+  version: 9.6.0
+  resolution: "@faker-js/faker@npm:9.6.0"
+  checksum: 10c0/57f76aba8744ac5f588bfcf55e61ab6f1b61664f0d1cd6cc9d9ae5bf9376bdb48d867487ace638bee393de126257b7fe6ebd602c9efd3346e7ee10e8643f1cdc
+  languageName: node
+  linkType: hard
+
 "@grammyjs/auto-retry@npm:^2.0.2":
   version: 2.0.2
   resolution: "@grammyjs/auto-retry@npm:2.0.2"
@@ -6227,6 +6234,7 @@ __metadata:
   dependencies:
     "@ant-design/icons": "npm:^5.6.1"
     "@eslint/eslintrc": "npm:^3"
+    "@faker-js/faker": "npm:^9.6.0"
     "@next/eslint-plugin-next": "npm:^15.2.0"
     "@types/node": "npm:^20"
     "@types/react": "npm:^19"

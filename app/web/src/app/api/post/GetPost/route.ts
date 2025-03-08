@@ -26,7 +26,10 @@ async function doGetPost(
     post: {
       id: post._id.toHexString(),
       title: post.title,
-      content: post.content,
+      sections: post.sections?.map((section) => ({
+        updatedAt: section.updatedAt || null,
+        content: section.union,
+      })),
       createdAt: post._id.getTimestamp().valueOf(),
     },
   };

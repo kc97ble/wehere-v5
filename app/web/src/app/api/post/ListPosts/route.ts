@@ -33,7 +33,12 @@ async function doListPosts(
     posts: posts.map((post) => ({
       id: post._id.toHexString(),
       title: post.title,
-      content: post.content || null,
+      sections: post.sections
+        ? post.sections.map((section) => ({
+            updatedAt: section.updatedAt || null,
+            content: section.union,
+          }))
+        : null,
       createdAt: post._id.getTimestamp().valueOf(),
     })),
     total,
