@@ -3,7 +3,7 @@
 import cx from "clsx";
 import Image from "next/image";
 import React from "react";
-import pngLogo from "../../../../components/NavBar/assets/logo.png";
+import pngLogo from "web/assets/logo.png";
 import styles from "./index.module.scss";
 
 type FooterLinkProps = {
@@ -87,23 +87,19 @@ function SectionFooter({ className, style }: SectionFooterProps) {
       <div className={styles.content}>
         <div className={styles.topSection}>
           {columns.map((column, index) => (
-            <LinkColumn
-              key={index}
-              title={column.title}
-              links={column.links}
-            />
+            <LinkColumn key={index} title={column.title} links={column.links} />
           ))}
         </div>
-        
+
         <div className={styles.divider} />
-        
+
         <div className={styles.bottomSection}>
           <div className={styles.logoContainer}>
-            <Image 
-              src={pngLogo} 
-              alt="WeHere Logo" 
-              className={styles.logo} 
-              width={120} 
+            <Image
+              src={pngLogo}
+              alt="WeHere Logo"
+              className={styles.logo}
+              width={120}
               height={48}
             />
           </div>

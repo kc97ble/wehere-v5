@@ -4,7 +4,7 @@ import clsx from "clsx";
 import Image from "next/image";
 import React from "react";
 import { VscBell, VscMenu } from "react-icons/vsc";
-import pngLogo from "./assets/logo.png";
+import pngLogo from "web/assets/logo.png";
 import { useIsDeviceWidthLessThan } from "./hooks/useIsDeviceWidthLessThan";
 import styles from "./index.module.scss";
 
