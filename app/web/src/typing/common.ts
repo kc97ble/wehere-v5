@@ -11,6 +11,7 @@ export const SectionUnion = z.discriminatedUnion("type", [
 export type SectionUnion = z.infer<typeof SectionUnion>;
 
 export const Section = z.object({
+  key: z.number().optional(),
   union: SectionUnion,
 });
 

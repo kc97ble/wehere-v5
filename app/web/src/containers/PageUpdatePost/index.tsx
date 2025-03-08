@@ -1,12 +1,22 @@
 "use client";
 
-import { Breadcrumb, Layout, Menu, Space, Typography, message } from "antd";
+import { RollbackOutlined, SaveOutlined } from "@ant-design/icons";
+import {
+  Breadcrumb,
+  Button,
+  Flex,
+  Layout,
+  Menu,
+  Space,
+  Typography,
+  message,
+} from "antd";
 import Link from "next/link";
 import React from "react";
-import { AutoField, AutoForm, ErrorsField, SubmitField } from "uniforms-antd";
+import { AutoField, AutoForm, ErrorsField } from "uniforms-antd";
 import ZodBridge from "uniforms-bridge-zod";
-import { z } from "zod";
 import { Section } from "web/typing/common";
+import { z } from "zod";
 import SectionListField from "./components/SectionListField";
 import useIsMounted from "./hooks/useIsMounted";
 
@@ -104,7 +114,7 @@ export default function PageUpdatePost({ postId, initialData }: Props) {
           <Breadcrumb
             items={[{ title: initialData.title }, { title: "Update Post" }]}
           />
-          <Typography.Title level={3}>{initialData.title}</Typography.Title>
+          <Typography.Title level={1}>{initialData.title}</Typography.Title>
 
           {mounted ? (
             <AutoForm
@@ -113,10 +123,28 @@ export default function PageUpdatePost({ postId, initialData }: Props) {
               onSubmit={handleSubmit}
               disabled={isSubmitting}
             >
-              <AutoField name="title" />
-              <SectionListField name="sections" />
-              <ErrorsField />
-              <SubmitField loading={isSubmitting} />
+              <Flex vertical gap="middle">
+                <Space>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    loading={isSubmitting}
+                    icon={<SaveOutlined />}
+                  >
+                    {"Save Changes"}
+                  </Button>
+                  <Button
+                    icon={<RollbackOutlined />}
+                    onClick={() => window.history.back()}
+                  >
+                    {"Cancel"}
+                  </Button>
+                </Space>
+
+                <AutoField name="title" />
+                <SectionListField name="sections" />
+                <ErrorsField />
+              </Flex>
             </AutoForm>
           ) : undefined}
         </Space>

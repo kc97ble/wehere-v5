@@ -1,5 +1,7 @@
 "use client";
 
+// TODO: let's move this folder back to the parent folder
+
 import clsx from "clsx";
 import Image from "next/image";
 import React from "react";

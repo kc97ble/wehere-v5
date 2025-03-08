@@ -1,0 +1,19 @@
+.Viewer {
+  position: relative;
+  min-height: 40px;
+
+  .overlay {
+    display: none;
+
+    position: absolute;
+    inset: 0;
+    background-color: #2222;
+    border-radius: 8px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &:hover > .overlay {
+    display: flex;
+  }
+}
