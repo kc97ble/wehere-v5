@@ -73,7 +73,7 @@ export default function ManagePostPage() {
       message.success("Post created successfully");
       form.resetFields();
       setIsModalOpen(false);
-      router.push(getUrl("/admin/update-post", { postId: data.postId }));
+      router.push(`/admin/update-post/${data.postId}`);
     },
     onError: (error) => {
       console.error("Error creating post:", error);
@@ -103,9 +103,7 @@ export default function ManagePostPage() {
         <Space size="middle">
           <Button
             icon={<EditOutlined />}
-            onClick={() =>
-              router.push(getUrl("/admin/update-post", { postId: record.id }))
-            }
+            onClick={() => router.push(`/admin/update-post/${record.id}`)}
             type="text"
           />
           <Button

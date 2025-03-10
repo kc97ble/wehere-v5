@@ -1,20 +1,14 @@
-"use client";
-
 import { PlusOutlined } from "@ant-design/icons";
 import { Button, Flex } from "antd";
-import { useField } from "uniforms";
 import { Section } from "web/typing/common";
-import SectionEditor from "../SectionEditor";
+import SectionEditor from "./SectionEditor";
 
 type Props = {
-  name: string;
-  value?: Section[];
+  value: Section[];
+  onChange?: (value: Section[]) => void;
 };
 
-export default function SectionListField(props: Props) {
-  const [fieldProps, _context] = useField(props.name, props);
-  const { onChange, value } = fieldProps;
-
+export default function SectionListEditor({ value, onChange }: Props) {
   if (value == null) {
     return null;
   }
@@ -28,12 +22,12 @@ export default function SectionListField(props: Props) {
           onChange={(updatedSection) => {
             const items = [...value];
             items[index] = updatedSection;
-            onChange(items);
+            onChange?.(items);
           }}
           onDelete={() => {
             const items = [...value];
             items.splice(index, 1);
-            onChange(items);
+            onChange?.(items);
           }}
           onMove={(destination) => {
             const items = [...value];
@@ -66,7 +60,7 @@ export default function SectionListField(props: Props) {
                 break;
             }
 
-            onChange(items);
+            onChange?.(items);
           }}
           onInsert={(destination) => {
             const items = [...value];
@@ -81,7 +75,7 @@ export default function SectionListField(props: Props) {
               items.splice(index + 1, 0, newSection);
             }
 
-            onChange(items);
+            onChange?.(items);
           }}
           onDuplicate={() => {
             const items = [...value];
@@ -93,7 +87,7 @@ export default function SectionListField(props: Props) {
 
             // Insert after the current section
             items.splice(index + 1, 0, duplicatedSection);
-            onChange(items);
+            onChange?.(items);
           }}
         />
       ))}
@@ -103,7 +97,10 @@ export default function SectionListField(props: Props) {
           type="dashed"
           icon={<PlusOutlined />}
           onClick={() => {
-            onChange([...value, { key: Date.now(), union: { type: "NONE" } }]);
+            onChange?.([
+              ...value,
+              { key: Date.now(), union: { type: "NONE" } },
+            ]);
           }}
         >
           {"Add Section"}
