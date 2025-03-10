@@ -36,10 +36,14 @@ export default function AdminLayout({
                 key: "manage-posts",
                 label: <Link href="/admin/manage-posts">{"Posts"}</Link>,
               },
-              {
-                key: "postman",
-                label: <Link href="/admin/postman">{"Postman"}</Link>,
-              },
+              // {
+              //   key: "postman",
+              //   label: <Link href="/admin/postman">{"Postman"}</Link>,
+              // },
+              // {
+              //   key: "upload-image",
+              //   label: <Link href="/admin/upload-image">{"Upload Image"}</Link>,
+              // },
             ]}
           />
         </Layout.Header>

@@ -160,7 +160,7 @@ export default function PostmanPage() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       // Apply the type to the window object
-      (window as Record<string, any>).faker = faker;
+      (window as unknown as Record<string, unknown>).faker = faker;
       console.log(
         "Faker assigned to window object. Access via window.faker or just faker in console."
       );

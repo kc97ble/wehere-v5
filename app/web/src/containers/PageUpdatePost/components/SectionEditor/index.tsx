@@ -1,6 +1,7 @@
 import cx from "clsx";
 import React from "react";
 import { Section } from "web/typing/common";
+import ImageEditor from "./components/ImageEditor";
 import NoneEditor from "./components/NoneEditor";
 import TextEditor from "./components/TextEditor";
 import Viewer from "./containers/Viewer";
@@ -44,6 +45,17 @@ export default function SectionEditor({
       case "TXT":
         return (
           <TextEditor
+            initialValue={value.union}
+            onSubmit={(union) => {
+              setEditing(false);
+              onChange?.({ ...value, union });
+            }}
+            onCancel={() => setEditing(false)}
+          />
+        );
+      case "IMG1":
+        return (
+          <ImageEditor
             initialValue={value.union}
             onSubmit={(union) => {
               setEditing(false);

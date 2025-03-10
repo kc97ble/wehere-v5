@@ -1,4 +1,4 @@
-import { DeleteOutlined, FileTextOutlined } from "@ant-design/icons";
+import { DeleteOutlined, FileTextOutlined, PictureOutlined } from "@ant-design/icons";
 import { Button, Card, Flex } from "antd";
 import cx from "clsx";
 import React from "react";
@@ -46,6 +46,22 @@ export default function NoneEditor({
           block
         >
           {"Paragraph"}
+        </Button>
+        <Button
+          type="default"
+          icon={<PictureOutlined />}
+          onClick={() =>
+            onSubmit?.({
+              type: "IMG1",
+              url: undefined,
+              intrinsicWidth: undefined,
+              intrinsicHeight: undefined,
+              maxWidth: undefined,
+            })
+          }
+          block
+        >
+          {"Image"}
         </Button>
       </Flex>
     </Card>

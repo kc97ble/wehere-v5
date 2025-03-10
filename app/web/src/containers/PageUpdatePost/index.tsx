@@ -1,6 +1,6 @@
 "use client";
 
-import { RollbackOutlined, SaveOutlined } from "@ant-design/icons";
+import { SaveOutlined } from "@ant-design/icons";
 import { Breadcrumb, Button, Flex, Space, Typography, message } from "antd";
 import React from "react";
 import { AutoField, AutoForm, ErrorsField } from "uniforms-antd";
@@ -100,13 +100,14 @@ export default function PageUpdatePost({ postId, initialData }: Props) {
                 loading={isSubmitting}
                 icon={<SaveOutlined />}
               >
-                {"Save Changes"}
+                Save Changes
               </Button>
               <Button
-                icon={<RollbackOutlined />}
-                onClick={() => window.history.back()}
+                onClick={() =>
+                  window.open(`/posts/${postId}`, "_blank", "noreferrer")
+                }
               >
-                {"Cancel"}
+                View Page
               </Button>
             </Space>
 

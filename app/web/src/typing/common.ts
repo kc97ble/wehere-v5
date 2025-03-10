@@ -10,6 +10,13 @@ export const SectionUnion = z.discriminatedUnion("type", [
   }),
   z.object({ type: z.literal("MD"), markdown: z.string() }),
   z.object({ type: z.literal("HTML"), html: z.string() }),
+  z.object({
+    type: z.literal("IMG1"),
+    url: z.string().optional(),
+    intrinsicWidth: z.number().optional(),
+    intrinsicHeight: z.number().optional(),
+    maxWidth: z.number().optional(),
+  }),
 ]);
 
 export type SectionUnion = z.infer<typeof SectionUnion>;
