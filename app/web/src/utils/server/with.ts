@@ -1,5 +1,6 @@
 import { Db, MongoClient } from "mongodb";
 import { NextRequest, NextResponse } from "next/server";
+import { serializeError } from "serialize-error";
 import { ZodType, ZodTypeDef } from "zod";
 import { ENV } from "./env";
 
@@ -78,9 +79,32 @@ export function withBodyParser<T, TI, R, C>(
   ): NextHandler<C> => {
     return async function (request, context) {
       const body = await request.json();
-      const params = schema.parse(body);
-      const result = await handler(params, [request, context]);
-      return NextResponse.json(result, { status: 200 });
+      const parsed = schema.safeParse(body);
+      if (!parsed.success) {
+        return NextResponse.json(serializeError(parsed.error), { status: 400 });
+      } else {
+        const result = await handler(parsed.data, [request, context]);
+        return NextResponse.json(result, { status: 200 });
+      }
+    };
+  };
+}
+
+export function withQueryParser<T, TI, R, C>(
+  schema: ZodType<T, ZodTypeDef, TI>
+) {
+  return (
+    handler: (params: T, context: [NextRequest, C]) => Promise<R>
+  ): NextHandler<C> => {
+    return async function (request, context) {
+      const query = Object.fromEntries(request.nextUrl.searchParams.entries());
+      const parsed = schema.safeParse(query);
+      if (!parsed.success) {
+        return NextResponse.json(serializeError(parsed.error), { status: 400 });
+      } else {
+        const result = await handler(parsed.data, [request, context]);
+        return NextResponse.json(result, { status: 200 });
+      }
     };
   };
 }

@@ -28,8 +28,8 @@ export const RsGetPost = z.object({
 
 export type PrListPosts = z.infer<typeof PrListPosts>;
 export const PrListPosts = z.object({
-  offset: z.number().int().default(0),
-  limit: z.number().int().min(1).max(100).default(10),
+  offset: z.coerce.number().int().default(0),
+  limit: z.coerce.number().int().min(1).max(100).default(10),
   order: z.enum(["ASC", "DES"]).optional(),
 });
 

@@ -1,17 +1,7 @@
 "use client";
 
 import { RollbackOutlined, SaveOutlined } from "@ant-design/icons";
-import {
-  Breadcrumb,
-  Button,
-  Flex,
-  Layout,
-  Menu,
-  Space,
-  Typography,
-  message,
-} from "antd";
-import Link from "next/link";
+import { Breadcrumb, Button, Flex, Space, Typography, message } from "antd";
 import React from "react";
 import { AutoField, AutoForm, ErrorsField } from "uniforms-antd";
 import ZodBridge from "uniforms-bridge-zod";
@@ -36,6 +26,7 @@ type Props = {
   };
 };
 
+// TODO: move to app/web/src/app/admin/update-post/containers/PageUpdatePost.tsx
 export default function PageUpdatePost({ postId, initialData }: Props) {
   const mounted = useIsMounted();
   const [isSubmitting, setIsSubmitting] = React.useState(false);
@@ -78,77 +69,48 @@ export default function PageUpdatePost({ postId, initialData }: Props) {
   };
 
   return (
-    <Layout style={{ minHeight: "100vh" }}>
+    <Space
+      direction="vertical"
+      size="middle"
+      style={{ display: "flex", maxWidth: "800px", margin: "0 auto" }}
+    >
       {contextHolder}
-      <Layout.Header
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: "24px",
-        }}
-      >
-        <div>
-          <Typography.Text strong style={{ fontSize: "18px", color: "#fff" }}>
-            {"WeHere Admin"}
-          </Typography.Text>
-        </div>
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          style={{ flex: "1 1 auto" }}
-          items={[
-            {
-              key: "postman",
-              label: <Link href="/postman">Postman</Link>,
-            },
-          ]}
-        />
-      </Layout.Header>
-      <Layout.Content style={{ padding: "24px", background: "#f5f8ff" }}>
-        <Space
-          direction="vertical"
-          size="middle"
-          style={{ display: "flex", maxWidth: "800px", margin: "0 auto" }}
+      <Breadcrumb
+        items={[{ title: initialData.title }, { title: "Update Post" }]}
+      />
+      <Typography.Title level={1}>{initialData.title}</Typography.Title>
+
+      {mounted ? (
+        <AutoForm
+          model={initialData}
+          schema={formBridge}
+          onSubmit={handleSubmit}
+          disabled={isSubmitting}
         >
-          <Breadcrumb
-            items={[{ title: initialData.title }, { title: "Update Post" }]}
-          />
-          <Typography.Title level={1}>{initialData.title}</Typography.Title>
+          <Flex vertical gap="middle">
+            <Space>
+              <Button
+                type="primary"
+                htmlType="submit"
+                loading={isSubmitting}
+                icon={<SaveOutlined />}
+              >
+                {"Save Changes"}
+              </Button>
+              <Button
+                icon={<RollbackOutlined />}
+                onClick={() => window.history.back()}
+              >
+                {"Cancel"}
+              </Button>
+            </Space>
 
-          {mounted ? (
-            <AutoForm
-              model={initialData}
-              schema={formBridge}
-              onSubmit={handleSubmit}
-              disabled={isSubmitting}
-            >
-              <Flex vertical gap="middle">
-                <Space>
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    loading={isSubmitting}
-                    icon={<SaveOutlined />}
-                  >
-                    {"Save Changes"}
-                  </Button>
-                  <Button
-                    icon={<RollbackOutlined />}
-                    onClick={() => window.history.back()}
-                  >
-                    {"Cancel"}
-                  </Button>
-                </Space>
-
-                <AutoField name="title" />
-                <SectionListField name="sections" />
-                <ErrorsField />
-              </Flex>
-            </AutoForm>
-          ) : undefined}
-        </Space>
-      </Layout.Content>
-    </Layout>
+            <AutoField name="title" />
+            <SectionListField name="sections" />
+            <ErrorsField />
+          </Flex>
+        </AutoForm>
+      ) : undefined}
+    </Space>
   );
 }

@@ -5,13 +5,14 @@ import { Button, Divider, Input, Layout, Menu, Typography } from "antd";
 import { useEffect, useState } from "react";
 import { AutoForm } from "uniforms-antd";
 import { ZodBridge } from "uniforms-bridge-zod";
+import { getUrl, QueryObject } from "web/utils/client/http";
 import { ZodType } from "zod";
 import {
   PrCreatePost,
   PrDeletePost,
   PrGetPost,
   PrListPosts,
-} from "../api/post/typing";
+} from "../../api/post/typing";
 
 const { Content, Sider } = Layout;
 const { Title } = Typography;
@@ -20,7 +21,8 @@ const { TextArea } = Input;
 type EndpointType<T> = {
   key: string;
   label: string;
-  url: string;
+  method: "GET" | "POST";
+  url: `/${string}`;
   schema: ZodType<T>;
   schemaBridge: ZodBridge<T>;
 };
@@ -30,6 +32,7 @@ const endpoints: EndpointType<unknown>[] = [
   {
     key: "CreatePost",
     label: "CreatePost",
+    method: "POST",
     url: "/api/post/CreatePost",
     schema: PrCreatePost,
     schemaBridge: new ZodBridge({ schema: PrCreatePost }),
@@ -37,6 +40,7 @@ const endpoints: EndpointType<unknown>[] = [
   {
     key: "GetPost",
     label: "GetPost",
+    method: "GET",
     url: "/api/post/GetPost",
     schema: PrGetPost,
     schemaBridge: new ZodBridge({ schema: PrGetPost }),
@@ -44,6 +48,7 @@ const endpoints: EndpointType<unknown>[] = [
   {
     key: "ListPosts",
     label: "ListPosts",
+    method: "GET",
     url: "/api/post/ListPosts",
     schema: PrListPosts,
     schemaBridge: new ZodBridge({ schema: PrListPosts }),
@@ -51,6 +56,7 @@ const endpoints: EndpointType<unknown>[] = [
   {
     key: "DeletePost",
     label: "DeletePost",
+    method: "POST",
     url: "/api/post/DeletePost",
     schema: PrDeletePost,
     schemaBridge: new ZodBridge({ schema: PrDeletePost }),
@@ -65,19 +71,26 @@ function Postman({ endpoint }: { endpoint: EndpointType<unknown> }) {
   } | null>(null);
   const [loading, setLoading] = useState(false);
 
-  // Create schema bridge for the endpoint
+  const doFetch = async (data: QueryObject) => {
+    switch (endpoint.method) {
+      case "GET":
+        return await fetch(getUrl(endpoint.url, data), {
+          method: "GET",
+          headers: { Accepts: "application/json" },
+        });
+      case "POST":
+        return await fetch(endpoint.url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+    }
+  };
 
-  const handleSubmit = async (data: unknown) => {
+  const handleSubmit = async (data: QueryObject) => {
     setLoading(true);
     try {
-      const response = await fetch(endpoint.url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
+      const response = await doFetch(data);
       const responseData = await response.json();
       setResponse({
         status: response.status,
@@ -100,7 +113,7 @@ function Postman({ endpoint }: { endpoint: EndpointType<unknown> }) {
         <code>{endpoint.url}</code>
       </div>
 
-      <Divider>Request</Divider>
+      <Divider>{"Request"}</Divider>
       <div style={{ marginBottom: "24px" }}>
         <AutoForm
           schema={endpoint.schemaBridge}
@@ -112,18 +125,18 @@ function Postman({ endpoint }: { endpoint: EndpointType<unknown> }) {
               loading={loading}
               style={{ marginTop: "16px" }}
             >
-              Submit
+              {"Submit"}
             </Button>
           )}
         />
       </div>
 
-      <Divider>Response</Divider>
+      <Divider>{"Response"}</Divider>
       <div>
         {response ? (
           <div>
             <div style={{ marginBottom: "8px" }}>
-              <strong>Status:</strong> {response.status}
+              <strong>{"Status:"}</strong> {response.status}
             </div>
             <TextArea
               value={JSON.stringify(response.data, null, 2)}
@@ -133,7 +146,7 @@ function Postman({ endpoint }: { endpoint: EndpointType<unknown> }) {
             />
           </div>
         ) : (
-          <div style={{ color: "#999" }}>No response yet</div>
+          <div style={{ color: "#999" }}>{"No response yet"}</div>
         )}
       </div>
     </>
@@ -146,13 +159,8 @@ export default function PostmanPage() {
   // Assign faker to window object
   useEffect(() => {
     if (typeof window !== "undefined") {
-      // Define a proper window interface extension
-      interface CustomWindow extends Window {
-        faker?: typeof faker;
-      }
-
       // Apply the type to the window object
-      (window as CustomWindow).faker = faker;
+      (window as Record<string, any>).faker = faker;
       console.log(
         "Faker assigned to window object. Access via window.faker or just faker in console."
       );
@@ -163,14 +171,14 @@ export default function PostmanPage() {
   const selectedEndpoint = endpoints.find((e) => e.key === selectedKey);
 
   return (
-    <Layout style={{ minHeight: "100vh" }}>
+    <Layout style={{ flex: "1 0 auto" }}>
       <Sider
         width={250}
         theme="light"
         style={{ borderRight: "1px solid #f0f0f0" }}
       >
         <div style={{ padding: "16px", fontWeight: "bold", fontSize: "18px" }}>
-          Postman
+          {"Postman"}
         </div>
         <Menu
           mode="inline"
@@ -191,7 +199,7 @@ export default function PostmanPage() {
           ) : (
             <div style={{ textAlign: "center", padding: "100px 0" }}>
               <Title level={4}>
-                Please select an endpoint from the sidebar
+                {"Please select an endpoint from the sidebar"}
               </Title>
             </div>
           )}

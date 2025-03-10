@@ -19,7 +19,9 @@ const eslintConfig = [
         "varsIgnorePattern": "^_"
       }],
       // Use unknown instead of any where possible
-      "@typescript-eslint/no-explicit-any": "warn"
+      "@typescript-eslint/no-explicit-any": "warn",
+      // Ban using interface in favor of type alias
+      "@typescript-eslint/consistent-type-definitions": ["error", "type"]
     }
   }
 ];

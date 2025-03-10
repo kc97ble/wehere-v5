@@ -1,7 +1,14 @@
 import { Db, ObjectId } from "mongodb";
 import { NextResponse } from "next/server";
 import collections from "web/utils/server/collections";
-import { PrGetPost, PrUpdatePost, RsGetPost, RsUpdatePost } from "./typing";
+import {
+  PrGetPost,
+  PrListPosts,
+  PrUpdatePost,
+  RsGetPost,
+  RsListPosts,
+  RsUpdatePost,
+} from "./typing";
 
 export async function doGetPost(
   ctx: { db: Db },
@@ -40,4 +47,34 @@ export async function doUpdatePost(
   }
 
   return { success: true };
+}
+
+export async function doListPosts(
+  ctx: { db: Db },
+  params: PrListPosts
+): Promise<RsListPosts> {
+  const { offset, limit, order } = params;
+
+  // Get the posts with pagination
+  const posts = await collections.post.findMany(
+    ctx,
+    {}, // No filter
+    {
+      skip: offset,
+      limit,
+      sort: { _id: order === "ASC" ? 1 : -1 },
+    }
+  );
+
+  // Count total posts
+  const total = await ctx.db.collection("post").countDocuments();
+
+  return {
+    posts: posts.map((post) => ({
+      id: post._id.toHexString(),
+      title: post.title,
+      createdAt: post._id.getTimestamp().valueOf(),
+    })),
+    total,
+  };
 }
