@@ -19,7 +19,10 @@ export async function doGetPost(
   });
 
   if (!post) {
-    throw NextResponse.json({ error: "post not found" }, { status: 404 });
+    throw NextResponse.json(
+      { error: `Post not found: ${params.postId}` },
+      { status: 404 }
+    );
   }
 
   return {
@@ -27,6 +30,8 @@ export async function doGetPost(
       id: post._id.toHexString(),
       title: post.title,
       sections: post.sections,
+      tags: post.tags,
+      postedAt: post.postedAt ?? undefined,
       createdAt: post._id.getTimestamp().valueOf(),
     },
   };
@@ -34,12 +39,12 @@ export async function doGetPost(
 
 export async function doUpdatePost(
   ctx: { db: Db },
-  { postId, title, sections }: PrUpdatePost
+  { postId, title, sections, tags, postedAt }: PrUpdatePost
 ): Promise<RsUpdatePost> {
   const result = await collections.post.updateOne(
     ctx,
     { _id: ObjectId.createFromHexString(postId) },
-    { $set: { title, sections } }
+    { $set: { title, sections, tags, postedAt } }
   );
 
   if (result.matchedCount === 0) {

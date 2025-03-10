@@ -22,6 +22,8 @@ export default async function PostPage({ params }: Props) {
         postId={postId}
         title={post.title}
         sections={post.sections || []}
+        tags={post.tags || []}
+        postedAt={post.postedAt}
       />
     );
   } catch (error) {

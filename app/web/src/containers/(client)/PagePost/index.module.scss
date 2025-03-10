@@ -8,6 +8,29 @@
   // }
 }
 
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.tag {
+  align-items: center;
+  background: #b3e7ff;
+  border-radius: 4px;
+  color: #1e1f81;
+  display: inline-flex;
+  font-family: var(--font-sans), sans-serif;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  height: 24px;
+  justify-content: center;
+  line-height: 14px;
+  padding: 0 8px;
+}
+
 .title {
   all: unset;
   display: block;
@@ -20,4 +43,13 @@
   font-style: normal;
   font-weight: 600;
   line-height: 28px;
+}
+
+.postedAt {
+  color: #696a75;
+  font-family: var(--font-sans), sans-serif;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 14px;
 }

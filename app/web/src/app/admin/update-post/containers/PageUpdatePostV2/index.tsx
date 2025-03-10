@@ -1,13 +1,13 @@
 "use client";
 
-import { EditOutlined, EyeOutlined, SaveOutlined } from "@ant-design/icons";
+import { EyeOutlined, SaveOutlined } from "@ant-design/icons";
 import { Button, message } from "antd";
 import cx from "clsx";
 import React from "react";
 import { AdminLayoutContext } from "web/app/admin/utils";
 import { PrUpdatePost, RsGetPost, RsUpdatePost } from "web/app/api/post/typing";
 import { httpPost } from "web/utils/client/http";
-import PreviewWrapper from "./components/PreviewWrapper";
+import MetadataEditor, { Metadata } from "./components/MetadataEditor";
 import SectionListEditor from "./components/SectionListEditor";
 import styles from "./index.module.scss";
 
@@ -26,7 +26,11 @@ export default function PageUpdatePostV2({
 }: Props) {
   const [messageApi, contextHolder] = message.useMessage();
 
-  const [title, setTitle] = React.useState(initialData.title);
+  const [metadata, setMetadata] = React.useState<Metadata>({
+    title: initialData.title,
+    tags: initialData.tags,
+    postedAt: initialData.postedAt ? new Date(initialData.postedAt) : undefined,
+  });
   const [sections, setSections] = React.useState(initialData.sections || []);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [dirty, setDirty] = React.useState(false);
@@ -38,8 +42,10 @@ export default function PageUpdatePostV2({
       setIsSubmitting(true);
       await httpPost(RsUpdatePost, "/api/post/UpdatePost", {
         postId,
-        title,
         sections,
+        title: metadata.title,
+        tags: metadata.tags,
+        postedAt: metadata.postedAt?.valueOf() ?? null,
       } satisfies PrUpdatePost);
       messageApi.success("Post updated successfully!");
       setDirty(false);
@@ -50,7 +56,7 @@ export default function PageUpdatePostV2({
     } finally {
       setIsSubmitting(false);
     }
-  }, [title, sections, messageApi, postId]);
+  }, [metadata, sections, messageApi, postId]);
 
   React.useEffect(() => {
     adminLayoutContext.registerPrimarySlot?.(
@@ -104,24 +110,16 @@ export default function PageUpdatePostV2({
     };
   }, [dirty]);
 
-  const renderTitleMenu = () => (
-    <Button
-      icon={<EditOutlined />}
-      onClick={() => {
-        const newTitle = window.prompt("Title", title);
-        if (newTitle == null) return;
-        setTitle(newTitle);
-        setDirty(true);
-      }}
-    />
-  );
-
   return (
     <div className={cx(styles.container, className)} style={style}>
       {contextHolder}
-      <PreviewWrapper slotMenu={renderTitleMenu()}>
-        <h1 className={styles.title}>{title}</h1>
-      </PreviewWrapper>
+      <MetadataEditor
+        value={metadata}
+        onChange={(metadata) => {
+          setMetadata(metadata);
+          setDirty(true);
+        }}
+      />
       <SectionListEditor
         value={sections}
         onChange={(sections) => {

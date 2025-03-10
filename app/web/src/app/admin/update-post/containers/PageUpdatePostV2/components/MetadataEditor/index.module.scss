@@ -1,0 +1,40 @@
+// copied from app/web/src/containers/(client)/PagePost/index.module.scss
+.title {
+  all: unset;
+  display: block;
+  margin: 16px 0;
+  text-transform: uppercase;
+
+  color: #1e1f81;
+  font-family: var(--font-sans), sans-serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 28px;
+}
+
+.Root {
+  width: 100%;
+}
+
+.metadata {
+  margin-bottom: 16px;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.postedAt {
+  font-size: 14px;
+  color: #666;
+}
+
+.formButtons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24px;
+}

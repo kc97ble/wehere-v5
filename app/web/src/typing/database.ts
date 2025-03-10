@@ -6,6 +6,8 @@ export type DbPost = z.infer<typeof DbPost>;
 export const DbPost = z.object({
   _id: DbObjectId,
   title: z.string(),
-  sections: Section.array().nullish(),
+  sections: Section.array().default([]),
+  tags: z.string().array().default([]),
+  postedAt: z.number().nullish(),
   updatedAt: z.number().nullish(),
 });

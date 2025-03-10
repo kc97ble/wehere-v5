@@ -1,5 +1,5 @@
+import { Section } from "web/typing/common";
 import { z } from "zod";
-import { Section } from "../../../typing/common";
 
 export type PrCreatePost = z.infer<typeof PrCreatePost>;
 export const PrCreatePost = z.object({
@@ -21,7 +21,9 @@ export const RsGetPost = z.object({
   post: z.object({
     id: z.string(),
     title: z.string(),
-    sections: z.array(Section).nullish(),
+    sections: z.array(Section),
+    tags: z.string().array(),
+    postedAt: z.number().optional(),
     createdAt: z.number(),
   }),
 });
@@ -60,6 +62,8 @@ export const PrUpdatePost = z.object({
   postId: z.string(),
   title: z.string().optional(),
   sections: z.array(Section).optional(),
+  tags: z.string().array().optional(),
+  postedAt: z.number().nullish(),
 });
 
 export type RsUpdatePost = z.infer<typeof RsUpdatePost>;
