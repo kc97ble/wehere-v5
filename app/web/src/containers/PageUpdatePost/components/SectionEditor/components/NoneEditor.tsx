@@ -1,5 +1,5 @@
 import { DeleteOutlined, FileTextOutlined } from "@ant-design/icons";
-import { Button, Card, Space } from "antd";
+import { Button, Card, Flex } from "antd";
 import cx from "clsx";
 import React from "react";
 import { SectionUnion } from "web/typing/common";
@@ -30,16 +30,24 @@ export default function NoneEditor({
       title="Choose a content type"
       extra={renderExtra()}
     >
-      <Space direction="vertical" style={{ width: "100%", marginTop: 16 }}>
+      <Flex gap="middle">
         <Button
           type="default"
           icon={<FileTextOutlined />}
-          onClick={() => onSubmit?.({ type: "TXT", text: "" })}
+          onClick={() => onSubmit?.({ type: "TXT", as: "h2", text: "" })}
           block
         >
-          Plain Text
+          {"Heading"}
         </Button>
-      </Space>
+        <Button
+          type="default"
+          icon={<FileTextOutlined />}
+          onClick={() => onSubmit?.({ type: "TXT", as: "p", text: "" })}
+          block
+        >
+          {"Paragraph"}
+        </Button>
+      </Flex>
     </Card>
   );
 }

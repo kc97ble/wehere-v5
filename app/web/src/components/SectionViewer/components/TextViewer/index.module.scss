@@ -1,0 +1,22 @@
+.container {
+  white-space: pre-wrap;
+}
+
+p.container {
+  color: #3b3c4a;
+  font-family: var(--font-serif), serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+}
+
+h2.container {
+  margin: 12px 0 24px 0;
+  color: #181a2a;
+  font-family: var(--font-sans), sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px;
+}

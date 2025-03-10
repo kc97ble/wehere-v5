@@ -3,7 +3,11 @@ import { z } from "zod";
 // Section schema definitions
 export const SectionUnion = z.discriminatedUnion("type", [
   z.object({ type: z.literal("NONE") }),
-  z.object({ type: z.literal("TXT"), text: z.string() }),
+  z.object({
+    type: z.literal("TXT"),
+    text: z.string(),
+    as: z.enum(["h2", "p"]).optional(),
+  }),
   z.object({ type: z.literal("MD"), markdown: z.string() }),
   z.object({ type: z.literal("HTML"), html: z.string() }),
 ]);

@@ -72,7 +72,12 @@ export default function PageUpdatePost({ postId, initialData }: Props) {
     <Space
       direction="vertical"
       size="middle"
-      style={{ display: "flex", maxWidth: "800px", margin: "0 auto" }}
+      style={{
+        display: "flex",
+        width: "100%",
+        maxWidth: "800px",
+        margin: "0 auto",
+      }}
     >
       {contextHolder}
       <Breadcrumb

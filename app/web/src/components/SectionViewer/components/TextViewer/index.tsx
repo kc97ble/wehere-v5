@@ -10,9 +10,10 @@ type Props = {
 };
 
 export default function TextViewer({ className, style, value }: Props) {
+  const Component = value.as || "p";
   return (
-    <div className={cx(styles.container, className)} style={style}>
+    <Component className={cx(styles.container, className)} style={style}>
       {value.text}
-    </div>
+    </Component>
   );
 }

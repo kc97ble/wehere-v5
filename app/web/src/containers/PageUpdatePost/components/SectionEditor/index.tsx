@@ -1,18 +1,20 @@
-import { Button } from "antd";
-import { EditOutlined } from "@ant-design/icons";
 import cx from "clsx";
 import React from "react";
-import SectionViewer from "web/components/SectionViewer";
 import { Section } from "web/typing/common";
 import NoneEditor from "./components/NoneEditor";
 import TextEditor from "./components/TextEditor";
+import Viewer from "./containers/Viewer";
 import styles from "./index.module.scss";
+
 type Props = {
   className?: string;
   style?: React.CSSProperties;
   value: Section;
   onChange?: (section: Section) => void;
   onDelete?: () => void;
+  onMove?: (destination: "up" | "down" | "top" | "bottom") => void;
+  onInsert?: (destination: "above" | "below") => void;
+  onDuplicate?: () => void;
 };
 
 export default function SectionEditor({
@@ -21,6 +23,9 @@ export default function SectionEditor({
   value,
   onChange,
   onDelete,
+  onMove,
+  onInsert,
+  onDuplicate,
 }: Props) {
   const [editing, setEditing] = React.useState(false);
 
@@ -54,22 +59,22 @@ export default function SectionEditor({
 
   if (!editing && value.union.type !== "NONE") {
     return (
-      <div className={cx(styles.Viewer, className)}>
-        <SectionViewer section={value} />
-        <div className={styles.overlay}>
-          <Button 
-            icon={<EditOutlined />} 
-            onClick={() => setEditing(true)}
-          >
-            Edit
-          </Button>
-        </div>
+      <div className={cx(styles.SectionEditor, className)}>
+        <Viewer
+          value={value}
+          onActivateEditor={() => setEditing(true)}
+          onChange={onChange}
+          onDelete={onDelete}
+          onMove={onMove}
+          onInsert={onInsert}
+          onDuplicate={onDuplicate}
+        />
       </div>
     );
   }
 
   return (
-    <div className={cx(styles.Editor, className)} style={style}>
+    <div className={cx(styles.SectionEditor, className)} style={style}>
       {renderEditor()}
     </div>
   );

@@ -1,11 +1,11 @@
 .container {
   margin: 16px auto;
-  max-width: 800px;
+  max-width: 560px;
 
-  &:hover,
-  *:hover {
-    box-shadow: inset 0 0 0 1em hsla(3rad, 50%, 50%, 20%);
-  }
+  // &:hover,
+  // *:hover {
+  //   box-shadow: inset 0 0 0 1em hsla(3rad, 50%, 50%, 20%);
+  // }
 }
 
 .title {

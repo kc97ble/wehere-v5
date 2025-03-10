@@ -1,19 +1,38 @@
 .Viewer {
   position: relative;
   min-height: 40px;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
 
-  .overlay {
-    display: none;
-
-    position: absolute;
-    inset: 0;
-    background-color: #2222;
-    border-radius: 8px;
-    justify-content: center;
-    align-items: center;
+  &:hover {
+    border-left-color: #91caff;
   }
 
-  &:hover > .overlay {
+  .menuContainer {
+    display: none;
+    position: absolute;
+    inset: 0 auto auto 0;
+  }
+
+  &:hover > .menuContainer {
     display: flex;
+  }
+
+  .menu {
+    align-items: flex-start;
+    border-radius: 0 0 16px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: flex-start;
+    margin: 0 auto;
+    max-width: 560px;
+    padding: 0 8px;
+    width: 100%;
+  }
+
+  .content {
+    max-width: 560px;
+    margin: 0 auto;
   }
 }
