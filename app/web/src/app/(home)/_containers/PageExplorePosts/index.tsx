@@ -1,40 +1,52 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import Link from "next/link";
-import { useState } from "react";
 import { PrListPosts, RsListPosts } from "web/app/api/post/typing";
 import { getUrl, httpGet } from "web/utils/client/http";
+import styles from "./index.module.scss";
 
 export default function PageExplorePosts() {
-  const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
 
-  const { data, isLoading } = useQuery({
-    queryKey: [
-      "/api/post/ListPosts",
-      {
-        offset: (currentPage - 1) * pageSize,
-        limit: pageSize,
-        order: "DES",
-      } satisfies PrListPosts,
-    ] as const,
-    queryFn: ({ queryKey: [pathName, query] }) =>
-      httpGet(RsListPosts, getUrl(pathName, query), { cache: "force-cache" }),
-  });
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: ["/api/post/ListPosts"],
+      queryFn: async ({ pageParam }) => {
+        const query = {
+          offset: pageParam,
+          limit: pageSize,
+          order: "DES",
+        } satisfies PrListPosts;
+
+        return httpGet(RsListPosts, getUrl("/api/post/ListPosts", query), {
+          cache: "force-cache",
+        });
+      },
+      getNextPageParam: (lastPage, allPages) => {
+        const loadedPosts = allPages.reduce(
+          (total, page) => total + page.posts.length,
+          0
+        );
+        return loadedPosts < lastPage.total ? loadedPosts : undefined;
+      },
+      initialPageParam: 0,
+    });
+
+  const posts = data?.pages.flatMap((page) => page.posts) || [];
 
   return (
-    <div style={{ padding: "20px" }}>
-      <div>
-        <h1>Explore Posts</h1>
+    <div className={styles.container}>
+      <h1>Explore Posts</h1>
 
-        <div style={{ marginTop: "16px" }}>
-          {isLoading ? (
-            <p>Loading...</p>
-          ) : (
-            <div>
-              {data?.posts.map((post) => (
-                <div key={post.id} style={{ marginBottom: "16px" }}>
+      <div className={styles.postsContainer}>
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : (
+          <>
+            <div className={styles.postsList}>
+              {posts.map((post) => (
+                <div key={post.id} className={styles.postItem}>
                   <Link href={`/posts/${post.id}`}>
                     <h2>{post.title}</h2>
                   </Link>
@@ -42,18 +54,20 @@ export default function PageExplorePosts() {
                 </div>
               ))}
             </div>
-          )}
-        </div>
 
-        <div style={{ marginTop: "16px", textAlign: "right" }}>
-          {/* <Pagination
-            current={currentPage}
-            total={data?.total || 0}
-            pageSize={pageSize}
-            onChange={(page) => setCurrentPage(page)}
-            showSizeChanger={false}
-          /> */}
-        </div>
+            {hasNextPage && (
+              <div className={styles.loadMoreContainer}>
+                <button
+                  onClick={() => fetchNextPage()}
+                  disabled={isFetchingNextPage}
+                  className={styles.loadMoreButton}
+                >
+                  {isFetchingNextPage ? "Loading more..." : "Load More"}
+                </button>
+              </div>
+            )}
+          </>
+        )}
       </div>
     </div>
   );
