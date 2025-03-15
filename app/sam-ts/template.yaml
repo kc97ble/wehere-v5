@@ -20,8 +20,9 @@ Resources:
   ProcessorFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: dist/
+      CodeUri: .aws-sam/build/ProcessorFunction/
       Handler: app.handler
+      Runtime: nodejs18.x
       Events:
         SQSEvent:
           Type: SQS

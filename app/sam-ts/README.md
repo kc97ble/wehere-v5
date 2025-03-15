@@ -38,6 +38,7 @@ interface TelegramEvent {
 ├── events/               # Sample events for local testing
 │   └── sqs-event.json    # Sample SQS event
 ├── scripts/              # Utility scripts
+│   ├── build-lambda.js   # Script to prepare Lambda package
 │   ├── publish-to-sqs.ts # Script to publish messages to SQS
 │   └── test-sqs.ts       # Script to test SQS to Lambda integration
 ├── src/                  # Source code
@@ -79,17 +80,14 @@ yarn test
 ### Local Testing
 
 ```bash
-# Build the SAM application
-yarn sam:build
-
-# Test the function locally with a sample event
+# Bundle and test the function locally with a sample event
 yarn sam:local
 
 # Start local Lambda endpoint for integration testing
 yarn sam:start-lambda
 
 # In another terminal, run the test script
-npx ts-node scripts/test-sqs.ts
+yarn sam:test-sqs
 ```
 
 ### Testing with AWS Resources
@@ -110,6 +108,6 @@ npx ts-node scripts/publish-to-sqs.ts --queue-url $QUEUE_URL --type tg --bot-tok
 ### Deployment
 
 ```bash
-# Build and deploy
-yarn sam:build && yarn sam:deploy
+# Build, bundle and deploy
+yarn sam:deploy
 ```

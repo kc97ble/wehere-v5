@@ -6,21 +6,20 @@
   "main": "dist/app.js",
   "scripts": {
     "clean": "rimraf dist",
-    "build": "tsc",
+    "build": "rimraf dist && tsc",
     "test": "jest",
     "watch": "tsc -w",
-    "sam:local": "yarn build && sam local invoke ProcessorFunction -e events/sqs-event.json",
+    "sam:bundle": "yarn build && node scripts/build-lambda.js",
+    "sam:local": "yarn sam:bundle && sam local invoke ProcessorFunction -e events/sqs-event.json",
     "sam:test-sqs": "yarn build && ts-node scripts/test-sqs.ts",
-    "sam:start-lambda": "yarn build && sam local start-lambda",
-    "sam:deploy": "yarn build && sam deploy --guided"
+    "sam:start-lambda": "yarn sam:bundle && sam local start-lambda",
+    "sam:deploy": "yarn sam:bundle && sam deploy --guided"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.136",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.11.25",
     "@types/node-fetch": "^2.6.11",
-    "esbuild": "^0.25.1",
-    "esbuild-plugin-copy": "^2.1.1",
     "jest": "^29.7.0",
     "rimraf": "^5.0.5",
     "ts-jest": "^29.1.2",
@@ -31,5 +30,12 @@
     "aws-sdk": "^2.1570.0",
     "node-fetch": "^2.7.0",
     "uuid": "^9.0.1"
-  }
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "types": "./dist/app.d.ts"
 }
