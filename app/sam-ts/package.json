@@ -1,0 +1,33 @@
+{
+  "name": "sam-ts",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SQS Event Processor with TypeScript",
+  "main": "dist/app.js",
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "tsc",
+    "test": "jest",
+    "watch": "tsc -w",
+    "sam:build": "sam build",
+    "sam:local": "sam local invoke ProcessorFunction -e events/sqs-event.json",
+    "sam:start-lambda": "sam local start-lambda",
+    "sam:deploy": "sam deploy --guided"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.136",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.11.25",
+    "@types/node-fetch": "^2.6.11",
+    "esbuild": "^0.20.1",
+    "jest": "^29.7.0",
+    "rimraf": "^5.0.5",
+    "ts-jest": "^29.1.2",
+    "typescript": "^5.4.2"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1570.0",
+    "node-fetch": "^2.7.0",
+    "uuid": "^9.0.1"
+  }
+}

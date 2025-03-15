@@ -1,0 +1,50 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Event processor for handling messages from SQS using TypeScript
+
+Globals:
+  Function:
+    Timeout: 10
+    Runtime: nodejs18.x
+    Architectures:
+      - x86_64
+
+Resources:
+  EventQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: EventQueue
+      VisibilityTimeout: 300
+
+  ProcessorFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./
+      Handler: dist/app.handler
+      Events:
+        SQSEvent:
+          Type: SQS
+          Properties:
+            Queue: !GetAtt EventQueue.Arn
+            BatchSize: 10
+      Environment:
+        Variables:
+          LOG_LEVEL: INFO
+      Policies:
+        - Statement:
+            - Effect: Allow
+              Action:
+                - sqs:ReceiveMessage
+                - sqs:DeleteMessage
+                - sqs:GetQueueAttributes
+              Resource: !GetAtt EventQueue.Arn
+
+Outputs:
+  ProcessorFunction:
+    Description: "Processor Lambda Function ARN"
+    Value: !GetAtt ProcessorFunction.Arn
+
+  EventQueue:
+    Description: "SQS Queue URL"
+    Value: !GetAtt EventQueue.QueueUrl
