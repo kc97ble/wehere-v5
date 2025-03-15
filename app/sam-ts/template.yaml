@@ -20,8 +20,8 @@ Resources:
   ProcessorFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: ./
-      Handler: dist/app.handler
+      CodeUri: dist/
+      Handler: app.handler
       Events:
         SQSEvent:
           Type: SQS

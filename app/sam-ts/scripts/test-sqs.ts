@@ -97,5 +97,8 @@ async function testSqsLambdaIntegration() {
 
 // Run the test if this script is executed directly
 if (require.main === module) {
-  testSqsLambdaIntegration();
+  testSqsLambdaIntegration().catch(err => {
+    console.error('Test failed:', err);
+    process.exit(1);
+  });
 }
