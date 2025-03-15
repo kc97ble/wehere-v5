@@ -19,21 +19,47 @@ const vi = {
     "vi",
     `<i>Không thể tự nhận làm admin khi đã có ít nhất một người.</i>`
   ),
+  html_hello_admin: new MessageFormat("vi", `Xin chào, admin <b>{$name}</b>!`),
+  html_hello_angel: new MessageFormat("vi", `Xin chào, angel <b>{$name}</b>!`),
 };
 
 const main = withDefaultErrorHandler(async (ctx) => {
   const userId = ctx.update.message!.from.id;
 
-  await ctx.reply(
-    vi["html_hello_you_alone"].format({ user: html.literal(userId) }),
-    {
-      parse_mode: "HTML",
-      reply_markup: new InlineKeyboard().text(
-        vi["text_make_me_admin"],
-        `v2://start/make_admin`
-      ),
-    }
-  );
+  const dbRoles = await collections.role.findMany(ctx);
+  if (!dbRoles.length) {
+    await ctx.reply(
+      vi["html_hello_you_alone"].format({ user: html.literal(userId) }),
+      {
+        parse_mode: "HTML",
+        reply_markup: new InlineKeyboard().text(
+          vi["text_make_me_admin"],
+          `v2://start/make_admin`
+        ),
+      }
+    );
+    return;
+  }
+
+  const dbRole = dbRoles.find((r) => r.userId === userId);
+
+  if (dbRole?.isAdmin) {
+    await ctx.reply(
+      vi["html_hello_admin"].format({ name: html.literal(userId) }),
+      { parse_mode: "HTML" }
+    );
+    return;
+  }
+
+  if (dbRole?.role === "ANG") {
+    await ctx.reply(
+      vi["html_hello_angel"].format({ name: html.literal(userId) }),
+      { parse_mode: "HTML" }
+    );
+    return;
+  }
+
+  console.log("is mortal"); // TODO: upsert a thread
 });
 
 const make_admin = withDefaultErrorHandler(async (ctx) => {
