@@ -10,12 +10,12 @@ PIP := pip
 venv:
 	$(PYTHON) -m venv .venv
 	source .venv/bin/activate && \
-	$(PIP) install -r lambda/requirements.txt && \
+	$(PIP) install -r lambda_function/requirements.txt && \
 	$(PIP) install -U aws-sam-cli pytest pytest-mock coverage
 
 # Install dependencies
 install:
-	$(PIP) install -r lambda/requirements.txt
+	$(PIP) install -r lambda_function/requirements.txt
 	$(PIP) install -U pytest pytest-mock coverage
 
 # Build the SAM application

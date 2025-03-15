@@ -22,7 +22,7 @@ venv.bak/
 htmlcov/
 
 # Dependency directories
-lambda/package/
+lambda_function/package/
 
 # IDE
 .idea/

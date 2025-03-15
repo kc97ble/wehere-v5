@@ -36,16 +36,19 @@ Events are JSON objects with a discriminated union pattern:
 
 ```
 .
-├── .venv/                # Python virtual environment (gitignored)
-├── .aws-sam/             # SAM build artifacts (gitignored)
-├── events/               # Sample events for local testing
-│   └── sqs-event.json    # Sample SQS event
-├── lambda/               # Lambda function code
-│   ├── requirements.txt  # Python dependencies
-│   └── src/              # Source code
-│       └── app.py        # Lambda handler
-├── template.yaml         # SAM template
-└── README.md             # This file
+├── .venv/                      # Python virtual environment (gitignored)
+├── .aws-sam/                   # SAM build artifacts (gitignored)
+├── events/                     # Sample events for local testing
+│   └── sqs-event.json          # Sample SQS event
+├── lambda_function/            # Lambda function code
+│   ├── requirements.txt        # Python dependencies
+│   └── src/                    # Source code
+│       └── app.py              # Lambda handler
+├── tests/                      # Unit tests
+│   └── test_app.py             # Test cases for Lambda handler
+├── Makefile                    # Project automation
+├── template.yaml               # SAM template
+└── README.md                   # This file
 ```
 
 ## Development
@@ -64,7 +67,7 @@ python3 -m venv .venv
 source .venv/bin/activate
 
 # Install development dependencies
-pip install -r lambda/requirements.txt
+pip install -r lambda_function/requirements.txt
 pip install aws-sam-cli
 ```
 

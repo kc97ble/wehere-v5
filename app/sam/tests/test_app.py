@@ -6,20 +6,20 @@ import sys
 import os
 
 # Add lambda source directory to path
-sys.path.append(os.path.join(os.path.dirname(os.path.dirname(__file__)), "lambda"))
+sys.path.append(os.path.join(os.path.dirname(os.path.dirname(__file__))))
 
-from src.app import lambda_handler, process_event, process_tg_event
+from lambda_function.src.app import lambda_handler, process_event, process_tg_event
 
 
 class TestApp(unittest.TestCase):
     def test_process_noop_event(self):
         # Test that noop event is handled correctly
-        with patch('src.app.logger') as mock_logger:
+        with patch('lambda_function.src.app.logger') as mock_logger:
             event = {"type": "noop"}
             process_event(event)
             mock_logger.info.assert_called_with("Received noop event, doing nothing")
 
-    @patch('src.app.requests.post')
+    @patch('lambda_function.src.app.requests.post')
     def test_process_tg_event(self, mock_post):
         # Setup mock response
         mock_response = MagicMock()
@@ -27,7 +27,7 @@ class TestApp(unittest.TestCase):
         mock_post.return_value = mock_response
 
         # Test successful Telegram message
-        with patch('src.app.logger') as mock_logger:
+        with patch('lambda_function.src.app.logger') as mock_logger:
             event = {
                 "type": "tg",
                 "bot_token": "test_token",
@@ -52,7 +52,7 @@ class TestApp(unittest.TestCase):
 
     def test_lambda_handler(self):
         # Test that lambda handler processes events correctly
-        with patch('src.app.process_event') as mock_process_event:
+        with patch('lambda_function.src.app.process_event') as mock_process_event:
             event = {
                 "Records": [
                     {
