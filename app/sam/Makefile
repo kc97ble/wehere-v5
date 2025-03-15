@@ -40,6 +40,14 @@ deploy:
 local:
 	sam local invoke ProcessorFunction -e events/sqs-event.json
 
+# Start local Lambda endpoint for testing
+start-lambda:
+	sam local start-lambda
+
+# Test SQS integration locally
+test-sqs:
+	python scripts/test_sqs.py
+
 # Clean build artifacts
 clean:
 	rm -rf .aws-sam
