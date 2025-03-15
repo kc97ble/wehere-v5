@@ -18,8 +18,8 @@ Resources:
   ProcessorFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: src/
-      Handler: app.lambda_handler
+      CodeUri: lambda/
+      Handler: src/app.lambda_handler
       Architectures:
         - x86_64
       Events:

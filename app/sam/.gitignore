@@ -1,10 +1,14 @@
 # AWS SAM
 .aws-sam/
+
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
 .pytest_cache/
 *.so
+
+# Virtual environment
 .env
 .venv
 env/
@@ -12,5 +16,18 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+
+# Testing
 .coverage
 htmlcov/
+
+# Dependency directories
+lambda/package/
+
+# IDE
+.idea/
+.vscode/
+
+# System files
+.DS_Store
+Thumbs.db

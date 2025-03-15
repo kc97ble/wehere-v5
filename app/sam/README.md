@@ -32,6 +32,22 @@ Events are JSON objects with a discriminated union pattern:
 }
 ```
 
+## Project Structure
+
+```
+.
+├── .venv/                # Python virtual environment (gitignored)
+├── .aws-sam/             # SAM build artifacts (gitignored)
+├── events/               # Sample events for local testing
+│   └── sqs-event.json    # Sample SQS event
+├── lambda/               # Lambda function code
+│   ├── requirements.txt  # Python dependencies
+│   └── src/              # Source code
+│       └── app.py        # Lambda handler
+├── template.yaml         # SAM template
+└── README.md             # This file
+```
+
 ## Development
 
 ### Prerequisites
@@ -40,11 +56,23 @@ Events are JSON objects with a discriminated union pattern:
 - Python 3.9
 - AWS account and credentials configured
 
+### Setup Environment
+
+```bash
+# Create and activate virtual environment
+python3 -m venv .venv
+source .venv/bin/activate
+
+# Install development dependencies
+pip install -r lambda/requirements.txt
+pip install aws-sam-cli
+```
+
 ### Local Testing
 
 ```bash
-# Install dependencies
-pip install -r requirements.txt
+# Build the application
+sam build
 
 # Test the function locally with a sample event
 sam local invoke ProcessorFunction -e events/sqs-event.json
