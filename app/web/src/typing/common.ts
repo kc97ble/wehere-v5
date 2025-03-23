@@ -8,6 +8,7 @@ export const RefItem = z.object({
   url: z.string().optional(),
   publisher: z.string().optional(),
   retrievedOn: z.string().optional(),
+  others: z.string().optional(),
 });
 
 export type SectionUnion = z.infer<typeof SectionUnion>;

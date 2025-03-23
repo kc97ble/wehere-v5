@@ -40,6 +40,10 @@ export default function RefListViewer({ className, style, value }: Props) {
           if (item.retrievedOn) {
             citation += vi.text_retrieved_on.format({ date: item.retrievedOn });
           }
+          
+          if (item.others) {
+            citation += " " + item.others;
+          }
 
           return (
             <li key={index} className={styles.refItem}>

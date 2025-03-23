@@ -125,6 +125,13 @@ export default function RefListEditor({
                     placeholder="Date retrieved"
                   />
                 </Form.Item>
+                <Form.Item label="Others" style={{ marginBottom: 8 }}>
+                  <Input
+                    value={item.others || ""}
+                    onChange={(e) => handleItemChange(index, "others", e.target.value)}
+                    placeholder="Additional information"
+                  />
+                </Form.Item>
               </Flex>
             </Card>
           ))}
