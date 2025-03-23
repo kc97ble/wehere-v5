@@ -1,18 +1,20 @@
 import { PlusOutlined } from "@ant-design/icons";
 import { Button, Flex } from "antd";
 import { Section } from "web/typing/common";
+import { EditingCounterApi } from "../types";
 import SectionEditor from "./SectionEditor";
 
 type Props = {
   value: Section[];
   onChange?: (value: Section[]) => void;
+  editingCounterApi?: EditingCounterApi;
 };
 
-export default function SectionListEditor({ value, onChange }: Props) {
-  if (value == null) {
-    return null;
-  }
-
+export default function SectionListEditor({
+  value,
+  onChange,
+  editingCounterApi,
+}: Props) {
   return (
     <Flex vertical gap="middle">
       {value.map((section, index) => (
@@ -89,6 +91,7 @@ export default function SectionListEditor({ value, onChange }: Props) {
             items.splice(index + 1, 0, duplicatedSection);
             onChange?.(items);
           }}
+          editingCounterApi={editingCounterApi}
         />
       ))}
 

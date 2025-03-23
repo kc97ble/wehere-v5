@@ -10,6 +10,7 @@ import { httpPost } from "web/utils/client/http";
 import MetadataEditor, { Metadata } from "./components/MetadataEditor";
 import SectionListEditor from "./components/SectionListEditor";
 import styles from "./index.module.scss";
+import { EditingCounterApi } from "./types";
 
 type Props = {
   className?: string;
@@ -34,10 +35,25 @@ export default function PageUpdatePostV2({
   const [sections, setSections] = React.useState(initialData.sections || []);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [dirty, setDirty] = React.useState(false);
+  const [editingCount, setEditingCount] = React.useState(0);
+
+  const isEditing = editingCount > 0;
+
+  const editingCounterApi: EditingCounterApi = React.useMemo(() => {
+    return {
+      enterEditing: () => setEditingCount((count) => count + 1),
+      leaveEditing: () => setEditingCount((count) => count - 1),
+    };
+  }, []);
 
   const adminLayoutContext = React.useContext(AdminLayoutContext);
 
   const handleSubmit = React.useCallback(async () => {
+    if (isEditing) {
+      messageApi.error('Please close all active editors before saving.');
+      return;
+    }
+
     try {
       setIsSubmitting(true);
       await httpPost(RsUpdatePost, "/api/post/UpdatePost", {
@@ -56,7 +72,7 @@ export default function PageUpdatePostV2({
     } finally {
       setIsSubmitting(false);
     }
-  }, [metadata, sections, messageApi, postId]);
+  }, [metadata, sections, messageApi, postId, isEditing]);
 
   React.useEffect(() => {
     adminLayoutContext.registerPrimarySlot?.(
@@ -87,7 +103,14 @@ export default function PageUpdatePostV2({
     return () => {
       adminLayoutContext.unregisterPrimarySlot?.("save");
     };
-  }, [handleSubmit, isSubmitting, dirty, adminLayoutContext, postId]);
+  }, [
+    handleSubmit,
+    isSubmitting,
+    dirty,
+    adminLayoutContext,
+    postId,
+    isEditing,
+  ]);
 
   // Handle page navigation confirmation when there are unsaved changes
   React.useEffect(() => {
@@ -126,6 +149,7 @@ export default function PageUpdatePostV2({
           setSections(sections);
           setDirty(true);
         }}
+        editingCounterApi={editingCounterApi}
       />
     </div>
   );

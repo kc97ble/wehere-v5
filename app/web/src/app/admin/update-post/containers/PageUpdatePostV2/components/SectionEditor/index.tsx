@@ -1,6 +1,7 @@
 import cx from "clsx";
 import React from "react";
 import { Section } from "web/typing/common";
+import { EditingCounterApi } from "../../types";
 import ImageEditor from "./components/ImageEditor";
 import NoneEditor from "./components/NoneEditor";
 import RefListEditor from "./components/RefListEditor";
@@ -17,6 +18,7 @@ type Props = {
   onMove?: (destination: "up" | "down" | "top" | "bottom") => void;
   onInsert?: (destination: "above" | "below") => void;
   onDuplicate?: () => void;
+  editingCounterApi?: EditingCounterApi;
 };
 
 export default function SectionEditor({
@@ -28,8 +30,17 @@ export default function SectionEditor({
   onMove,
   onInsert,
   onDuplicate,
+  editingCounterApi,
 }: Props) {
   const [editing, setEditing] = React.useState(false);
+
+  React.useEffect(() => {
+    if (!editing) return;
+    editingCounterApi?.enterEditing();
+    return () => {
+      editingCounterApi?.leaveEditing();
+    };
+  }, [editingCounterApi, editing]);
 
   const renderEditor = () => {
     switch (value.union.type) {
