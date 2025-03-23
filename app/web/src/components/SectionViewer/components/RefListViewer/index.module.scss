@@ -1,0 +1,34 @@
+.container {
+  margin: 24px 0;
+}
+
+.refTitle {
+  all: unset;
+  display: block;
+
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.refList {
+  margin: 12px 0;
+  padding-left: 1.5rem;
+  font-family: var(--font-sans), sans-serif;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.refItem {
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+
+  a {
+    color: #1e1f81;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

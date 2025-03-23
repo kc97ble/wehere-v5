@@ -3,6 +3,7 @@ import React from "react";
 import { Section } from "web/typing/common";
 import ImageEditor from "./components/ImageEditor";
 import NoneEditor from "./components/NoneEditor";
+import RefListEditor from "./components/RefListEditor";
 import TextEditor from "./components/TextEditor";
 import Viewer from "./containers/Viewer";
 import styles from "./index.module.scss";
@@ -56,6 +57,17 @@ export default function SectionEditor({
       case "IMG1":
         return (
           <ImageEditor
+            initialValue={value.union}
+            onSubmit={(union) => {
+              setEditing(false);
+              onChange?.({ ...value, union });
+            }}
+            onCancel={() => setEditing(false)}
+          />
+        );
+      case "REFL":
+        return (
+          <RefListEditor
             initialValue={value.union}
             onSubmit={(union) => {
               setEditing(false);

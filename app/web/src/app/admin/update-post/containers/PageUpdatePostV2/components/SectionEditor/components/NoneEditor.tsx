@@ -1,4 +1,4 @@
-import { DeleteOutlined, FileTextOutlined, PictureOutlined } from "@ant-design/icons";
+import { DeleteOutlined, FileTextOutlined, OrderedListOutlined, PictureOutlined } from "@ant-design/icons";
 import { Button, Card, Flex } from "antd";
 import cx from "clsx";
 import React from "react";
@@ -30,7 +30,7 @@ export default function NoneEditor({
       title="Choose a content type"
       extra={renderExtra()}
     >
-      <Flex gap="middle">
+      <Flex gap="middle" wrap="wrap">
         <Button
           type="default"
           icon={<FileTextOutlined />}
@@ -62,6 +62,14 @@ export default function NoneEditor({
           block
         >
           {"Image"}
+        </Button>
+        <Button
+          type="default"
+          icon={<OrderedListOutlined />}
+          onClick={() => onSubmit?.({ type: "REFL", title: "References", items: [] })}
+          block
+        >
+          {"References"}
         </Button>
       </Flex>
     </Card>
