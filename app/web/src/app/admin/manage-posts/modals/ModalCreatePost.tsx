@@ -11,6 +11,20 @@ type Props = {
 export default function ModalCreatePost({ open, onSubmit, onCancel }: Props) {
   const [form] = Form.useForm();
   const [submitting, setSubmitting] = React.useState(false);
+  
+  // Generate default title with current date time
+  const getDefaultTitle = () => {
+    const now = new Date();
+    const formattedTime = now.toLocaleString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true
+    });
+    return `Untitled Post at ${formattedTime}`;
+  };
 
   const handleSubmit = () => {
     form
@@ -32,6 +46,15 @@ export default function ModalCreatePost({ open, onSubmit, onCancel }: Props) {
     form.resetFields();
     onCancel?.();
   };
+
+  // Set default value when modal opens
+  React.useEffect(() => {
+    if (open) {
+      form.setFieldsValue({
+        title: getDefaultTitle()
+      });
+    }
+  }, [open, form]);
 
   return (
     <Modal
