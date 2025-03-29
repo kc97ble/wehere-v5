@@ -1,4 +1,4 @@
-import { DeleteOutlined, FileTextOutlined, OrderedListOutlined, PictureOutlined } from "@ant-design/icons";
+import { DeleteOutlined, FileMarkdownOutlined, FileTextOutlined, OrderedListOutlined, PictureOutlined } from "@ant-design/icons";
 import { Button, Card, Flex } from "antd";
 import cx from "clsx";
 import React from "react";
@@ -46,6 +46,14 @@ export default function NoneEditor({
           block
         >
           {"Paragraph"}
+        </Button>
+        <Button
+          type="default"
+          icon={<FileMarkdownOutlined />}
+          onClick={() => onSubmit?.({ type: "MD", markdown: "" })}
+          block
+        >
+          {"Markdown"}
         </Button>
         <Button
           type="default"

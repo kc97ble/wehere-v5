@@ -2,6 +2,7 @@ import cx from "clsx";
 import React from "react";
 import { Section } from "web/typing/common";
 import ImageViewer from "./components/ImageViewer";
+import MarkdownViewer from "./components/MarkdownViewer";
 import RefListViewer from "./components/RefListViewer";
 import TextViewer from "./components/TextViewer";
 import styles from "./index.module.scss";
@@ -19,6 +20,8 @@ export default function SectionViewer({ className, style, section }: Props) {
         return null;
       case "TXT":
         return <TextViewer value={section.union} />;
+      case "MD":
+        return <MarkdownViewer value={section.union} />;
       case "IMG1":
         return <ImageViewer value={section.union} />;
       case "REFL":

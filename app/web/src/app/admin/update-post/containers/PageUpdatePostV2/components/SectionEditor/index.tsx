@@ -3,6 +3,7 @@ import React from "react";
 import { Section } from "web/typing/common";
 import { EditingCounterApi } from "../../types";
 import ImageEditor from "./components/ImageEditor";
+import MarkdownEditor from "./components/MarkdownEditor";
 import NoneEditor from "./components/NoneEditor";
 import RefListEditor from "./components/RefListEditor";
 import TextEditor from "./components/TextEditor";
@@ -57,6 +58,17 @@ export default function SectionEditor({
       case "TXT":
         return (
           <TextEditor
+            initialValue={value.union}
+            onSubmit={(union) => {
+              setEditing(false);
+              onChange?.({ ...value, union });
+            }}
+            onCancel={() => setEditing(false)}
+          />
+        );
+      case "MD":
+        return (
+          <MarkdownEditor
             initialValue={value.union}
             onSubmit={(union) => {
               setEditing(false);
